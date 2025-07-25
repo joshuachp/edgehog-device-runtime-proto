@@ -16,6 +16,13 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-.pre-commit-config.yaml
-output/
-.envrc
+[package]
+name = "edgehog-device-runtime-proto"
+version = "0.1.0"
+edition.workspace = true
+homepage.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[dependencies]
