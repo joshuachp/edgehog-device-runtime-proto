@@ -15,3 +15,10 @@
 // limitations under the License.
 //
 // SPDX-License-Identifier: Apache-2.0
+
+#[path = "edgehog.deviceruntime.containers.v1.rs"]
+pub mod edgehog_deviceruntime_containers_v1;
+
+// Re-exported dependencies
+pub use prost;
+pub use tonic;

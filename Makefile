@@ -16,7 +16,6 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-
 .PHONY: all rust
 
 all: rust
