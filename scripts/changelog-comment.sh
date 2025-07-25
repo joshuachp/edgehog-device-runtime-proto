@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # This file is part of Edgehog.
 #
 # Copyright 2025 SECO Mind Srl
@@ -16,27 +18,27 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-name: warmup-caches
-on:
-  workflow_call:
-  workflow_dispatch:
-permissions:
-  contents: read
-defaults:
-  run:
-    shell: bash
-env:
-  CARGO_TERM_COLOR: always
-  SCCACHE_GHA_ENABLED: "true"
-  RUSTC_WRAPPER: "sccache"
-jobs:
-  build:
-    runs-on: ubuntu-24.04
-    name: build
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/install-deps
-      - uses: actions-rust-lang/setup-rust-toolchain@v1.13.0
-      - uses: mozilla-actions/sccache-action@v0.0.9
-      - name: Build with all features
-        run: cargo build --locked --all-targets --all-features --workspace
+set -exEuo pipefail
+
+# Trap -e errors
+trap 'echo "Exit status $? at line $LINENO from: $BASH_COMMAND"' ERR
+
+FROM=$1
+TO=$2
+PR=$3
+
+changelog=$(git cliff -s all -- "$FROM..$TO")
+
+if [[ -n $changelog ]]; then
+    body="
+    Review the changelog that will be generated.
+
+    # Changelog
+
+    $changelog
+    "
+else
+    body="The commits don't specify any user facing change to add to the CHANGELOG.md."
+fi
+
+gh pr comment "$PR" --edit-last --create-if-none --body="$body"
