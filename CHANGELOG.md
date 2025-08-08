@@ -15,6 +15,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Merge pull request #4 from joshuachp/ci/init-ci [#4](https://github.com/edgehog-device-manager/edgehog-device-runtime-proto/pull/4)
+- Merge pull request #4 from joshuachp/ci/init-ci [(055c99a)](https://github.com/joshuachp/edgehog-device-runtime-proto/commit/055c99a4837136c2fb150459ad4a5e1b971467b6)
 
 
