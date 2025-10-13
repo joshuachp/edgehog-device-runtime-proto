@@ -32,4 +32,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Improve the container service [(53c5a99)](https://github.com/edgehog-device-manager/edgehog-device-runtime-proto/commit/53c5a99ebb5d76a7aa48c97a178b1c5044c822ef)
 
+- Improve the interface after review [(c5afd20)](https://github.com/edgehog-device-manager/edgehog-device-runtime-proto/commit/c5afd20168d86d6b44f5af4ff9114af03314ee70)
+
 
