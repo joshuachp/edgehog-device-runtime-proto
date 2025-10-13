@@ -108,8 +108,8 @@ pub struct StatsRequest {
     #[prost(string, repeated, tag = "1")]
     pub ids: ::prost::alloc::vec::Vec<::prost::alloc::string::String>,
     /// Interval in seconds between stats updates.
-    #[prost(int32, optional, tag = "2")]
-    pub interval_seconds: ::core::option::Option<i32>,
+    #[prost(uint64, optional, tag = "2")]
+    pub interval_seconds: ::core::option::Option<u64>,
     /// Limit the number of values to receive.
     #[prost(uint64, optional, tag = "3")]
     pub limit: ::core::option::Option<u64>,

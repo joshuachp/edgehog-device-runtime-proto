@@ -118,7 +118,7 @@ message StatsRequest {
   // If no ID is passed, all container telemetry is sent.
   repeated string ids = 1;
   // Interval in seconds between stats updates.
-  optional int32 interval_seconds = 2;
+  optional uint64 interval_seconds = 2;
   // Limit the number of values to receive.
   optional uint64 limit = 3;
 }
