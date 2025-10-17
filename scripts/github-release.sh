@@ -24,7 +24,7 @@ else
 fi
 
 if [[ -n ${GITHUB_REPO:-} ]]; then
-    changelog=$(git cliff --strip all ---unreleased --tag="$TAG" --github-repo="$GITHUB_REPO")
+    changelog=$(git cliff --strip all --unreleased --tag="$TAG" --github-repo="$GITHUB_REPO")
 else
     changelog=$(git cliff --strip all --unreleased --tag="$TAG")
 fi
