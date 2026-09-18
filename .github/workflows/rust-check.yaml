@@ -105,6 +105,7 @@ jobs:
         uses: obi1kenobi/cargo-semver-checks-action@v2
         with:
           release-type: patch
+          manifest-path: rust/Cargo.toml
   # Check that the create can be compiled with only the packaged files
   for-publish:
     name: stable / for-publish

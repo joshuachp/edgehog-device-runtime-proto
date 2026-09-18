@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.0] - 2025-10-17
+
 ### Added
 
 - Add proto version v1 [(365fc87)](https://github.com/edgehog-device-manager/edgehog-device-runtime-proto/commit/365fc8773a1c24217167b4967e33f405b49ce35c)
