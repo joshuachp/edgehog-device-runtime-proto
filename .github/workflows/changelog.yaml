@@ -6,14 +6,10 @@ name: changelog
 on:
   workflow_call:
   workflow_dispatch:
-  pull_request_target:
-    branches:
-      - main
-      - release-*
   push:
     branches:
       - main
-      - release-*
+      - release-\d+.\d+
 # Spend CI time only on latest ref
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
@@ -23,7 +19,6 @@ defaults:
     shell: bash
 jobs:
   comment-changelog:
-    if: "${{ github.event_name == 'pull_request_target' }}"
     runs-on: ubuntu-24.04
     permissions:
       contents: read
@@ -58,28 +53,3 @@ jobs:
           FROM: ${{ github.event.pull_request.base.sha }}
           TO: ${{ github.event.pull_request.head.sha }}
           PR: ${{ github.event.pull_request.number }}
-  generate-changelog:
-    if: "${{ github.event_name == 'push' && github.repository == 'edgehog-device-manager/edgehog-device-runtime-proto' }}"
-    runs-on: ubuntu-24.04
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
-      - name: install git-cliff
-        uses: taiki-e/install-action@v2.62.21
-        with:
-          tool: git-cliff
-      - name: generate changelog comment
-        run: |
-          ./scripts/changelog-update.sh
-        env:
-          GITHUB_REPO: ${{ github.repository }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Commit and push changes
-        uses: stefanzweifel/git-auto-commit-action@v6.0.1
-        with:
-          commit_message: "chore(CHANGELOG): auto-generate changelog"
-          branch: ${{ github.ref_name }}
-          file_pattern: "CHANGELOG.md"

@@ -1,0 +1,149 @@
+// Copyright 2025 SECO Mind Srl
+//
+// SPDX-License-Identifier: Apache-2.0
+
+syntax = "proto3";
+
+package edgehog.deviceruntime.config.v1;
+
+// Service for managing the configuration on the device runtime.
+service ConfigService {
+  // Upload a new or replace a configuration file
+  rpc Put(PutRequest) returns (PutResponse) {}
+}
+
+// Upload a new or replace a configuration file
+message PutRequest {
+  // Name of the configuration file
+  string file_name = 1;
+  // Flag to persist the configuration
+  bool persist = 2;
+  // Configuration file for the runtime.
+  Config config = 3;
+}
+
+message PutResponse {}
+
+// Configuration file for the device runtime.
+message Config {
+  // Connection to use.
+  optional Connection connection = 1;
+  // Configuration for the Astarte Device SDK
+  optional AstarteDeviceConfig astarte_device_sdk = 2;
+  // Configuration for the Astarte Message Hub SDK
+  optional MessageHubConfig astarte_message_hub = 3;
+  // Configuration for the Container service.
+  optional ContainerConfig containers = 4;
+  // Configuration for the OTA service.
+  optional OtaConfig ota = 5;
+  // Configuration for the FileTransfer service.
+  optional FileTransferConfig file_transfer = 6;
+  // Configuration for the Forwarder service.
+  optional ForwarderConfig forwarder = 7;
+  // Persistent writable directory to use for storage.
+  optional string store_directory = 8;
+  // Configuration for a telemetry interface
+  map<string, TelemetryConfig> telemetry_config = 9;
+
+  // Connection type to use
+  enum Connection {
+    // Default connection
+    CONNECTION_UNSPECIFIED = 0;
+    // Connect to Astarte directly
+    CONNECTION_LIBRARY_DIRECT = 1;
+    // Connect to Astarte through the MessageHub
+    CONNECTION_LIBRARY_MESSAGE_HUB = 2;
+  }
+}
+
+/// Configuration for the Astarte Device SDK
+message AstarteDeviceConfig {
+  /// Astarte pairing URL
+  string pairing_url = 1;
+  /// Realm of the device
+  string realm = 2;
+  /// Device ID
+  optional string device_id = 3;
+  optional string credentials_secret = 4;
+  optional string pairing_token = 5;
+  optional string ignore_ssl = 6;
+}
+
+/// Configuration for the Astarte MessageHub
+message MessageHubConfig {
+  string endpoint = 1;
+}
+
+// Configuration for the container service.
+message ContainerConfig {
+  // Enables the container service
+  bool enabled = 1;
+  /// Flag to make the container service required
+  optional bool required = 2;
+  /// Maximum number of retries for the initialization of the service
+  optional uint32 max_retries = 3;
+}
+
+// Configuration for the OTA service.
+message OtaConfig {
+  // Enables the container service
+  bool enabled = 1;
+  /// Flag to make the container service required
+  optional Reboot reboot = 2;
+  /// Stream the OTA file directly.
+  optional bool streaming = 3;
+  /// Rauc configuration
+  optional RaucConfig rauc = 4;
+
+  // Reboot behaviour after a OTA
+  enum Reboot {
+    // Default configuration
+    REBOOT_UNSPECIFIED = 0;
+    // Default configuration
+    REBOOT_DEFAULT = 1;
+    // The reboot is performed externally
+    REBOOT_EXTERNAL = 2;
+  }
+
+  // Configuration for RAUC
+  message RaucConfig {
+    // Socket to communicate with RAUC
+    RaucDbus dbus_socket = 1;
+  }
+
+  // DBUS socket to communicate with the RAUC service
+  enum RaucDbus {
+    // Use the default configuration
+    RAUC_DBUS_UNSPECIFIED = 0;
+    // Use the system bus
+    RAUC_DBUS_SYSTEM = 1;
+    // Use the session bus
+    RAUC_DBUS_SESSION = 2;
+  }
+}
+
+// Configuration for the FileTransfer service.
+message FileTransferConfig {
+  // Enables the service
+  bool enabled = 1;
+  // Custom file storage directory.
+  optional string storage_dir = 2;
+  // Percentage of free space reserved for the system.
+  //
+  // For example 20 will reserve a minimum of 20% free space on a volume.
+  optional uint32 storage_reserved = 3;
+}
+
+// Configuration for the Forwarder service.
+message ForwarderConfig {
+  // Enables the service
+  bool enabled = 1;
+}
+
+/// Configures a telemetry interface.
+message TelemetryConfig {
+  // Enables the telemetry interface.
+  bool enabled = 1;
+  // Period in seconds to send the telemetry.
+  optional uint64 period_secs = 2;
+}
