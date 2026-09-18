@@ -12,6 +12,7 @@ on:
 # Only needs to clone the repository
 permissions:
   contents: write
+  id-token: write
 # Safer shell
 defaults:
   run:
