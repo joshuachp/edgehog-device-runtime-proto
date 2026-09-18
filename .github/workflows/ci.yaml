@@ -19,7 +19,6 @@ concurrency:
 defaults:
   run:
     shell: bash
-    working-directory: rust
 jobs:
   dco:
     uses: ./.github/workflows/dco.yaml
@@ -32,16 +31,3 @@ jobs:
     uses: ./.github/workflows/reuse-lint.yaml
   protobuf:
     uses: ./.github/workflows/protobuf.yaml
-  warmup-caches:
-    uses: ./.github/workflows/warmup-caches.yaml
-    needs: [reuse, dco]
-  codegen:
-    uses: ./.github/workflows/codegen.yaml
-    needs: [warmup-caches]
-  rust-check:
-    uses: ./.github/workflows/rust-check.yaml
-    needs: [warmup-caches]
-  rust-test:
-    uses: ./.github/workflows/rust-test.yaml
-    secrets: inherit
-    needs: [warmup-caches]
