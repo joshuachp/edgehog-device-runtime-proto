@@ -9,7 +9,7 @@ on:
   push:
     branches:
       - master
-      - release-*
+      - release-\d+.\d+
 permissions:
   contents: read
 # Spend CI time only on latest ref
